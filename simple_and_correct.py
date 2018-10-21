@@ -3,6 +3,9 @@ from itertools import product
 from functools import partial
 
 
+dxdy = ((0, 1), (-1, 0), (0, -1), (1, 0))
+
+
 def passable(a: tuple) -> bool:
     """
     We always have matrix a: NxN
@@ -19,12 +22,12 @@ def passable(a: tuple) -> bool:
             while queue:
                 ii, jj = queue.popleft()
                 visited[ii][jj] = True
-                for di, dj in ((0, 1), (-1, 0), (1, 0), (0, -1)):
+                for di, dj in dxdy:
                     ii_next = ii + di
-                    jj_next = jj + dj
                     if ii_next == n:
                         return True
-                    if 0 <= ii_next < n and 0 <= jj_next < n and a[ii_next][jj_next] and not visited[ii_next][jj_next]:
+                    jj_next = jj + dj
+                    if 0 <= ii_next and 0 <= jj_next < n and a[ii_next][jj_next] and not visited[ii_next][jj_next]:
                         queue.append((ii_next, jj_next))
     return False
 
@@ -69,5 +72,5 @@ def bisect_f(func, value=0.5, left=0.0, right=1.0, eps=1e-9):
     return le
 
 
-for i in range(5, 6):
+for i in range(1, 6):
     print(i, bisect_f(partial(get_prob_simple, n=i)))
