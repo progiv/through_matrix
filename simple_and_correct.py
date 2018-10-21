@@ -1,6 +1,7 @@
 from collections import deque
 from itertools import product
 from functools import partial
+import numpy as np
 
 
 dxdy = ((0, 1), (-1, 0), (0, -1), (1, 0))
@@ -45,7 +46,8 @@ def get_probability(sequence: tuple, p: float) -> float:
 
 
 def make_matrix(sequence: tuple, n: int) -> tuple:
-    return tuple(sequence[index * n: (index + 1) * n] for index in range(n))
+    return np.array(sequence).reshape((n, n))
+    # return tuple(sequence[index * n: (index + 1) * n] for index in range(n))
 
 
 def get_prob_simple(p: float, n: int = 1) -> float:
